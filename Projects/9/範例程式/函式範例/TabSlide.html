@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="script/jquery-1.11.1.min.js"></script>
+        <script src="script/TabSlide.js" type="text/javascript"></script>
+        <link href="css/TabSlide.css" rel="stylesheet" type="text/css">
+        <title>下滑區塊分隔jQuery</title>
+    </head>
+    <body>
+        <div class="myTab">
+	        <div class="tab_group">
+    	        <div class="tab_header">
+        	        <a href="#tab1">Model</a>
+                </div>
+		        <div id="tab1" class="tab_content">
+        	        <p>Model是屬於實作應用程式資料邏輯的部分。簡單來說，
+                       Model負責擷取資料庫的資料，進行資料庫的資料處理。</p>
+			        <p>ASP.NET MVC中有關「資料」的任務皆由Model扛起。負責定義資料型態，
+                       不管是在Controller或是在View中，所有資料的型態都會參考到Model；
+                       此外，還負責資料操作的方法，與資料庫間的新增、查詢、
+                       刪除和修改都將參考Model的定義。</p>
+		        </div>
+            </div>
+	        <div class="tab_group">
+    	        <div class="tab_header">
+        	        <a href="#tab2">Controller</a>
+                </div>
+		        <div id="tab2" class="tab_content">
+        	        <p>ASP.NET MVC強調關注點分離的概念，其中Controller只負責網站流程相關，
+                       其它如：商業邏輯或頁面顯示等工作，Controller一律不會介入，
+                       主要著重於控制網站流程及資料流向等任務。</p>
+    	        </div>
+            </div>
+	        <div class="tab_group">
+    	        <div class="tab_header">
+        	        <a href="#tab3">View</a>
+                </div>
+    	        <div id="tab3" class="tab_content">
+        	        <p>一個應用程式產品的外觀可能會影響使用者的習慣，所以View頁面設計成為重要的部分，
+                       另外，如何將功能完整的詮釋出來也可經由View進行協助，
+                       可讓使用者在使用時可體驗到應用程式帶來的便利性。</p>
+    	        </div>
+            </div>
+        </div>
+    </body>
+</html>

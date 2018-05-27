@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{var data = (IEnumerable<WebApplication1.Models.TypeSystem>)Model;}
+
+<table>
+    <tr>
+        <th>
+            email
+        </th>
+        <th>
+            name
+        </th>
+    </tr>
+    @foreach (var item in data)
+    {
+        <tr>
+            <td>
+                @item.email
+            </td>
+            <td>
+                @item.name
+            </td>
+        </tr>
+    }
+</table>

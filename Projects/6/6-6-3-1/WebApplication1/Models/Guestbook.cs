@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication1.Models
+{
+    [Table("MyGuestbook")]
+    public class Guestbook
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
+    }
+}

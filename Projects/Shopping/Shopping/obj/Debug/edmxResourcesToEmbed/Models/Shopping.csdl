@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CartBuy">
+    <Key>
+      <PropertyRef Name="Cart_Id" />
+    </Key>
+    <Property Name="Cart_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Item_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_CartBuy_ToItem" FromRole="CartBuy" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="CartSave">
+    <Key>
+      <PropertyRef Name="Account" />
+    </Key>
+    <Property Name="Account" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Cart_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Member" Relationship="Self.FK_CartSave_ToMember" FromRole="CartSave" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CartBuy" Relationship="Self.FK_CartBuy_ToItem" FromRole="Item" ToRole="CartBuy" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Account" />
+    </Key>
+    <Property Name="Account" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AuthCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CartSave" Relationship="Self.FK_CartSave_ToMember" FromRole="Member" ToRole="CartSave" />
+  </EntityType>
+  <Association Name="FK_CartBuy_ToItem">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="CartBuy" Type="Self.CartBuy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartBuy">
+        <PropertyRef Name="Item_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartSave_ToMember">
+    <End Role="Member" Type="Self.Member" Multiplicity="1" />
+    <End Role="CartSave" Type="Self.CartSave" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Account" />
+      </Principal>
+      <Dependent Role="CartSave">
+        <PropertyRef Name="Account" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoppingEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CartBuy" EntityType="Self.CartBuy" />
+    <EntitySet Name="CartSave" EntityType="Self.CartSave" />
+    <EntitySet Name="Item" EntityType="Self.Item" />
+    <EntitySet Name="Member" EntityType="Self.Member" />
+    <AssociationSet Name="FK_CartBuy_ToItem" Association="Self.FK_CartBuy_ToItem">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="CartBuy" EntitySet="CartBuy" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartSave_ToMember" Association="Self.FK_CartSave_ToMember">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="CartSave" EntitySet="CartSave" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

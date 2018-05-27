@@ -1,0 +1,37 @@
+* { 
+    -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;
+    -o-box-sizing: border-box; box-sizing: border-box;}
+
+#TreeView {
+    padding: 0;}
+
+#TreeView ul {
+    list-style: none;}
+
+#TreeView li {
+    list-style: none; padding: 2px 0 0 12px; letter-spacing: 2px;
+    line-height: 17px; margin: 5px 0; white-space: nowrap;}
+
+#TreeView li a {
+    color: blue; text-decoration: none; white-space: nowrap;}
+
+#TreeView li a.TreeLink {
+    color: black; font-weight: bold; font-size: 14px;}
+
+#TreeView li a.subTreeLink {
+    font-size: 13px;}
+
+#TreeView li a:hover {
+    color: red; font-size: 14px;}
+
+#TreeView li.TreeItem {
+    padding-top: 5px;}
+
+#TreeView li.subTreeItem {
+    padding-left: 30px; margin: 0;}
+
+#TreeView span.TreeIcon {
+    margin-right: 2px; display: inline-block; width: 10px; height: 10px;}
+
+#TreeView span.TreeIcon_open {
+    width: 10px; height: 10px;}

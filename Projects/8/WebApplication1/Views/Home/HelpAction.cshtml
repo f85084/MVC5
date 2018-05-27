@@ -1,0 +1,18 @@
+﻿HtmlHelper裡的ActionLink方法輸出：@Html.ActionLink("About", "Home")<br />
+UrlHelper裡的Action方法輸出：@Url.Action("About", "Home")<br />
+
+@Url.Action("About")<br />
+@Url.Action("About", "Home")<br />
+@Url.Action("About", "Home", new { message = "Test Meassage" })<br />
+
+@Url.RouteUrl(new { Controller = "Home", Action = "About", Id = 0 })<br />
+
+@Url.Content("~/Images/favicon.ico")<br />
+<img src="@Url.Content("~/Images/favicon.ico")"><br />
+
+@Url.Action("About", "Home", new { message = Url.Encode("測試訊息") })
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+}

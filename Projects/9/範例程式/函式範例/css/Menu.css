@@ -1,0 +1,26 @@
+*{
+    -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box; -o-box-sizing: border-box; box-sizing: border-box;}
+
+ul.MenuBar{
+    margin: 0; padding: 0;}
+
+ul.MenuBar:after {
+    content: ""; clear: both; display: block; }
+
+ul.MenuBar > li {
+    width:73px;
+}
+ 
+ul.MenuBar li{
+    list-style: none; float: left; display: inline-block;
+    padding: 10px; background-color: #DAF0F1; }
+
+ul.MenuBar li:hover{
+    background-color: #60B0FF; }
+
+ul.MenuBar li ul.SubMenu{
+    margin: 0; padding: 0; float: left; position: absolute; margin-left: -10px; margin-top: 10px; }
+
+ul.MenuBar li ul.SubMenu li{
+    float: none; display: block; }

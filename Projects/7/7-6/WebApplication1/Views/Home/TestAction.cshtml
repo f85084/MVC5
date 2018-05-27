@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "TestAction";
+}
+
+<h2>TestAction</h2>
+
+@using (Html.BeginForm()) {
+    <div>
+        @Html.Label("輸入訊息：")
+        <input type="text" name="Content" /><br />
+        @Html.Label("發言人：")
+        <input type="text" name="UserId" />
+    </div>
+    <div>
+        使用者輸入的訊息為：@ViewData["Content"]<br />
+        使用者名稱為：@ViewData["UserId"]
+    </div>
+    <input type="submit" />
+}
+

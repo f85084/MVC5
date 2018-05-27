@@ -1,0 +1,115 @@
+﻿@model IEnumerable<WebApplication1.Models.Scholar>
+
+<h2>修課成績(原版)</h2>
+
+<table>
+    <thead>
+        <tr>
+            <td>名字</td>
+            <td>課程</td>
+            <td>成績</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CourseName</td>
+                <td>
+                    @if (item.Score >= 60)
+                    {
+                        @item.Score
+                    }
+                    else
+                    {
+                        @:不及格
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h2>修課成績(helper)</h2>
+
+@helper DisplayScore(int Score)
+{
+    if (Score >= 60)
+    {
+        @Score
+    }
+    else
+    {
+        @:不及格
+    }
+}
+
+<table>
+    <thead>
+        <tr>
+            <td>名字</td>
+            <td>課程</td>
+            <td>成績</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CourseName</td>
+                <td>@DisplayScore(item.Score)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+<h2>修課成績(functions)</h2>
+
+@functions{
+    public bool isPass(int Score)
+    {
+        return (Score >= 60);
+    }
+}
+
+<table>
+    <thead>
+        <tr>
+            <td>名字</td>
+            <td>課程</td>
+            <td>成績</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.CourseName</td>
+                <td>
+                    @if (isPass(item.Score))
+                    {
+                        @item.Score
+                    }
+                    else
+                    {
+                        @:不及格
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+

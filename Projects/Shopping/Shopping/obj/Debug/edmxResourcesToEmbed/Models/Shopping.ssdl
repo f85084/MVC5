@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CartBuy">
+    <Key>
+      <PropertyRef Name="Cart_Id" />
+    </Key>
+    <Property Name="Cart_Id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Item_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartSave">
+    <Key>
+      <PropertyRef Name="Account" />
+    </Key>
+    <Property Name="Account" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Cart_Id" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="Account" />
+    </Key>
+    <Property Name="Account" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="AuthCode" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CartBuy_ToItem">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="CartBuy" Type="Self.CartBuy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartBuy">
+        <PropertyRef Name="Item_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartSave_ToMember">
+    <End Role="Member" Type="Self.Member" Multiplicity="1" />
+    <End Role="CartSave" Type="Self.CartSave" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="Account" />
+      </Principal>
+      <Dependent Role="CartSave">
+        <PropertyRef Name="Account" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShoppingModelStoreContainer">
+    <EntitySet Name="CartBuy" EntityType="Self.CartBuy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CartSave" EntityType="Self.CartSave" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CartBuy_ToItem" Association="Self.FK_CartBuy_ToItem">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="CartBuy" EntitySet="CartBuy" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartSave_ToMember" Association="Self.FK_CartSave_ToMember">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="CartSave" EntitySet="CartSave" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

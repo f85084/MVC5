@@ -1,0 +1,105 @@
+﻿@model Guestbook.ViewModels.FileView
+
+@{
+    ViewBag.Title = "檔案管理";
+}
+
+<h3>上傳檔案</h3>
+@*建立上傳檔案所須的表單*@
+@using (Html.BeginForm("UploadFile", "File", FormMethod.Post
+    , new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="upload" />
+    <input type="submit" name="upload_submit" value="上傳" />
+}
+
+<h3>已上傳檔案</h3>
+@*顯示檔案列表陣列表格*@
+<table>
+    @*顯示表格表頭*@
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.FileList[0].Name)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.FileList[0].CreateTime)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.FileList[0].Size)
+            </td>
+            <td></td>
+        </tr>
+    </thead>
+    @*如果檔案列表中有檔案，則列出檔案*@
+    @if (!Model.FileList.Count.Equals(0))
+    {
+        foreach (var item in Model.FileList)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.CreateTime
+                </td>
+                <td>
+                    @item.Size
+                </td>
+                <td>
+                    @Html.ActionLink("下載檔案", "DownloadFile"
+                        , new { Id = item.Id })
+                </td>
+            </tr>
+        }
+    }
+    @*如果檔案列表中沒有檔案，則印出"資料庫內查無資料"*@
+    else
+    {
+        <tr>
+            <td colspan="3">
+                資料庫內查無資料
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            @*若目前所在頁數大於1，則顯示上一頁與最前頁的按鈕*@
+            @if (Model.Paging.NowPage > 1)
+            {
+                @Html.ActionLink("<<", "Index", new { Page = 1 })
+                @Html.ActionLink("<", "Index"
+                    , new { Page = Model.Paging.NowPage - 1 })
+            }
+        </td>
+        <td>
+            @*顯示當前頁數前後各五頁的頁數*@
+            @for (var page = (Model.Paging.NowPage - 6);
+                page < (Model.Paging.NowPage + 6); page++)
+            {
+                if ((page > 0) && (page <= Model.Paging.MaxPage))
+                {
+                    if (page == Model.Paging.NowPage)
+                    {
+                        <b>@page</b>
+                    }
+                    else
+                    {
+                        @Html.ActionLink(page.ToString(), "Index"
+                            , new { Page = page })
+                    }
+                }
+            }
+        </td>
+        <td>
+            @*若目前所在頁數小於總頁數，則顯示下一頁與最後一頁的按鈕*@
+            @if (Model.Paging.NowPage < Model.Paging.MaxPage)
+            {
+                @Html.ActionLink(">", "Index"
+                    , new { Page = Model.Paging.NowPage + 1 })
+                @Html.ActionLink(">>", "Index"
+                    , new { Page = Model.Paging.MaxPage })
+            }
+        </td>
+    </tr>
+</table>

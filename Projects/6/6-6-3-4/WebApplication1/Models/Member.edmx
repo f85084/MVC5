@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Guestbooks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="CreaTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemberGuestbooks">
+          <Key>
+            <PropertyRef Name="Member_UserName" />
+            <PropertyRef Name="Guestbook_id" />
+          </Key>
+          <Property Name="Member_UserName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Guestbook_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_MemberGuestbooks_dbo_Guestbooks_Guestbook_id">
+          <End Role="Guestbooks" Type="Self.Guestbooks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberGuestbooks" Type="Self.MemberGuestbooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Guestbooks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MemberGuestbooks">
+              <PropertyRef Name="Guestbook_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MemberGuestbooks_dbo_Members_Member_UserName">
+          <End Role="Members" Type="Self.Members" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MemberGuestbooks" Type="Self.MemberGuestbooks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="MemberGuestbooks">
+              <PropertyRef Name="Member_UserName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Guestbooks" EntityType="Self.Guestbooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberGuestbooks" EntityType="Self.MemberGuestbooks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_MemberGuestbooks_dbo_Guestbooks_Guestbook_id" Association="Self.FK_dbo_MemberGuestbooks_dbo_Guestbooks_Guestbook_id">
+            <End Role="Guestbooks" EntitySet="Guestbooks" />
+            <End Role="MemberGuestbooks" EntitySet="MemberGuestbooks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MemberGuestbooks_dbo_Members_Member_UserName" Association="Self.FK_dbo_MemberGuestbooks_dbo_Members_Member_UserName">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="MemberGuestbooks" EntitySet="MemberGuestbooks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Guestbooks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreaTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Members" Relationship="Self.MemberGuestbooks" FromRole="Guestbooks" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Guestbooks" Relationship="Self.MemberGuestbooks" FromRole="Members" ToRole="Guestbooks" />
+        </EntityType>
+        <Association Name="MemberGuestbooks">
+          <End Role="Guestbooks" Type="Self.Guestbooks" Multiplicity="*" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MemberEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Guestbooks" EntityType="Self.Guestbooks" />
+          <EntitySet Name="Members" EntityType="Self.Members" />
+          <AssociationSet Name="MemberGuestbooks" Association="Self.MemberGuestbooks">
+            <End Role="Guestbooks" EntitySet="Guestbooks" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="MemberEntities">
+          <EntitySetMapping Name="Guestbooks">
+            <EntityTypeMapping TypeName="Model.Guestbooks">
+              <MappingFragment StoreEntitySet="Guestbooks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CreaTime" ColumnName="CreaTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="Model.Members">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MemberGuestbooks" TypeName="Model.MemberGuestbooks" StoreEntitySet="MemberGuestbooks">
+            <EndProperty Name="Guestbooks">
+              <ScalarProperty Name="id" ColumnName="Guestbook_id" />
+            </EndProperty>
+            <EndProperty Name="Members">
+              <ScalarProperty Name="UserName" ColumnName="Member_UserName" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
